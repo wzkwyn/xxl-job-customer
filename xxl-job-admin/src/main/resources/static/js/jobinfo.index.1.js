@@ -453,6 +453,8 @@ $(function() {
 				scheduleConf = $("#addModal .form input[name='schedule_conf_FIX_RATE']").val();
 			} else if (scheduleType == 'FIX_DELAY') {
 				scheduleConf = $("#addModal .form input[name='schedule_conf_FIX_DELAY']").val();
+			}else if(scheduleType == "FIX_DATE") {
+				scheduleConf = $("#addModal .form input[name='schedule_conf_FIX_DATE']").val();
 			}
 			$("#addModal .form input[name='scheduleConf']").val( scheduleConf );
 
@@ -552,6 +554,8 @@ $(function() {
 			$("#updateModal .form input[name='schedule_conf_FIX_RATE']").val( row.scheduleConf );
 		} else if (row.scheduleType == 'FIX_DELAY') {
 			$("#updateModal .form input[name='schedule_conf_FIX_DELAY']").val( row.scheduleConf );
+		} else if (row.scheduleType == 'FIX_DATE') {
+			$("#updateModal .form input[name='schedule_conf_FIX_DATE']").val( row.scheduleConf );
 		}
 
 		// 》init scheduleType
@@ -636,6 +640,8 @@ $(function() {
 				scheduleConf = $("#updateModal .form input[name='schedule_conf_FIX_RATE']").val();
 			} else if (scheduleType == 'FIX_DELAY') {
 				scheduleConf = $("#updateModal .form input[name='schedule_conf_FIX_DELAY']").val();
+			}else if (scheduleType == 'FIX_DATE') {
+				scheduleConf = $("#updateModal .form input[name='schedule_conf_FIX_DATE']").val();
 			}
 			$("#updateModal .form input[name='scheduleConf']").val( scheduleConf );
 
@@ -707,6 +713,8 @@ $(function() {
 			$("#addModal .form input[name='schedule_conf_FIX_RATE']").val( row.scheduleConf );
 		} else if (row.scheduleType == 'FIX_DELAY') {
 			$("#addModal .form input[name='schedule_conf_FIX_DELAY']").val( row.scheduleConf );
+		}else if (row.scheduleType == 'FIX_DATE') {
+			$("#addModal .form input[name='schedule_conf_FIX_DATE']").val( row.scheduleConf );
 		}
 
 		// 》init scheduleType

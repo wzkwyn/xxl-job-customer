@@ -5,6 +5,7 @@ import com.xxl.job.admin.core.model.XxlJobGroup;
 import com.xxl.job.admin.core.model.XxlJobInfo;
 import com.xxl.job.admin.core.model.XxlJobLog;
 import com.xxl.job.admin.core.route.ExecutorRouteStrategyEnum;
+import com.xxl.job.admin.core.scheduler.ScheduleTypeEnum;
 import com.xxl.job.admin.core.scheduler.XxlJobScheduler;
 import com.xxl.job.admin.core.util.I18nUtil;
 import com.xxl.job.core.biz.ExecutorBiz;
@@ -17,6 +18,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Date;
+import java.util.Objects;
 
 /**
  * xxl-job trigger
@@ -162,6 +164,13 @@ public class XxlJobTrigger {
         ReturnT<String> triggerResult = null;
         if (address != null) {
             triggerResult = runExecutor(triggerParam, address);
+            if (triggerResult.getCode() == ReturnT.SUCCESS_CODE && ScheduleTypeEnum.match(jobInfo.getScheduleType(), null) == ScheduleTypeEnum.FIX_DATE) {
+                //讲任务更新为停止
+                XxlJobInfo xxlJobInfoUpdater = new XxlJobInfo();
+                xxlJobInfoUpdater.setId(jobInfo.getId());
+                xxlJobInfoUpdater.setTriggerStatus(0);
+                XxlJobAdminConfig.getAdminConfig().getXxlJobInfoDao().updateSelective(xxlJobInfoUpdater);
+            }
         } else {
             triggerResult = new ReturnT<String>(ReturnT.FAIL_CODE, null);
         }

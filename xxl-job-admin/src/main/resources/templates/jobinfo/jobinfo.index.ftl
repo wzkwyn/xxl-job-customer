@@ -163,6 +163,10 @@
                             <label for="lastname" class="col-sm-2 control-label">${I18n.schedule_type_fix_delay}<font color="red">*</font></label>
                             <div class="col-sm-4"><input type="text" class="form-control" name="schedule_conf_FIX_DELAY" placeholder="${I18n.system_please_input} （ Second ）" maxlength="10" onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" ></div>
                         </div>
+                        <div class="schedule_conf schedule_conf_FIX_DATE" style="display: none" >
+                            <label for="lastname" class="col-sm-2 control-label">${I18n.schedule_type_fix_date}<font color="red">*</font></label>
+                            <div class="col-sm-4"><input type="text" class="form-control" name="schedule_conf_FIX_DATE" placeholder="${I18n.system_please_input} （ yyyy-MM-dd HH:mm:ss ）" maxlength="19" ></div>
+                        </div>
                     </div>
 
                     <br>
@@ -407,6 +411,10 @@ exit 0
                         <div class="schedule_conf schedule_conf_FIX_DELAY" style="display: none" >
                             <label for="lastname" class="col-sm-2 control-label">${I18n.schedule_type_fix_delay}<font color="red">*</font></label>
                             <div class="col-sm-4"><input type="text" class="form-control" name="schedule_conf_FIX_DELAY" placeholder="${I18n.system_please_input} （ Second ）" maxlength="10" onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" ></div>
+                        </div>
+                        <div class="schedule_conf schedule_conf_FIX_DATE" style="display: none" >
+                            <label for="lastname" class="col-sm-2 control-label">${I18n.schedule_type_fix_date}<font color="red">*</font></label>
+                            <div class="col-sm-4"><input type="text" class="form-control" name="schedule_conf_FIX_DATE" placeholder="${I18n.system_please_input} （ yyyy-MM-dd HH:mm:ss ）" maxlength="19" ></div>
                         </div>
                     </div>
 

@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
@@ -81,7 +82,6 @@ public class JobScheduleHelper {
                         if (scheduleList!=null && scheduleList.size()>0) {
                             // 2、push time-ring
                             for (XxlJobInfo jobInfo: scheduleList) {
-
                                 // time-ring jump
                                 if (nowTime > jobInfo.getTriggerNextTime() + PRE_READ_MS) {
                                     // 2.1、trigger-expire > 5s：pass && make next-trigger-time
@@ -140,7 +140,11 @@ public class JobScheduleHelper {
 
                             // 3、update trigger info
                             for (XxlJobInfo jobInfo: scheduleList) {
-                                XxlJobAdminConfig.getAdminConfig().getXxlJobInfoDao().scheduleUpdate(jobInfo);
+                                XxlJobInfo jobInfoUpdater = new XxlJobInfo();
+                                jobInfoUpdater.setId(jobInfo.getId());
+                                jobInfoUpdater.setTriggerLastTime(jobInfo.getTriggerLastTime());
+                                jobInfoUpdater.setTriggerLastTime(jobInfo.getTriggerLastTime());
+                                XxlJobAdminConfig.getAdminConfig().getXxlJobInfoDao().updateSelective(jobInfoUpdater);
                             }
 
                         } else {
@@ -270,6 +274,9 @@ public class JobScheduleHelper {
     }
 
     private void refreshNextValidTime(XxlJobInfo jobInfo, Date fromTime) throws Exception {
+        if (ScheduleTypeEnum.FIX_DATE == ScheduleTypeEnum.match(jobInfo.getScheduleType(), null)) {
+            return;
+        }
         Date nextValidTime = generateNextValidTime(jobInfo, fromTime);
         if (nextValidTime != null) {
             jobInfo.setTriggerLastTime(jobInfo.getTriggerNextTime());
@@ -360,8 +367,11 @@ public class JobScheduleHelper {
         if (ScheduleTypeEnum.CRON == scheduleTypeEnum) {
             Date nextValidTime = new CronExpression(jobInfo.getScheduleConf()).getNextValidTimeAfter(fromTime);
             return nextValidTime;
-        } else if (ScheduleTypeEnum.FIX_RATE == scheduleTypeEnum /*|| ScheduleTypeEnum.FIX_DELAY == scheduleTypeEnum*/) {
+        } else if (ScheduleTypeEnum.FIX_RATE == scheduleTypeEnum || ScheduleTypeEnum.FIX_DELAY == scheduleTypeEnum) {
             return new Date(fromTime.getTime() + Integer.valueOf(jobInfo.getScheduleConf())*1000 );
+        } else if (ScheduleTypeEnum.FIX_DATE == scheduleTypeEnum) {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            return sdf.parse(jobInfo.getScheduleConf());
         }
         return null;
     }

@@ -45,5 +45,7 @@ public interface XxlJobInfoDao {
 
 	public int scheduleUpdate(XxlJobInfo xxlJobInfo);
 
+	int updateSelective(XxlJobInfo xxlJobInfo);
+
 
 }

@@ -237,4 +237,20 @@
 		WHERE id = #{id}
 	</update>
 
+	<update id="updateSelective" parameterType="com.xxl.job.admin.core.model.XxlJobInfo"  >
+		UPDATE xxl_job_info
+		<set>
+			<if test="triggerLastTime != null">
+				trigger_last_time = #{triggerLastTime},
+			</if>
+			<if test="triggerLastTime != null">
+				trigger_next_time = #{triggerNextTime},
+			</if>
+			<if test="triggerStatus != null">
+				trigger_status = #{triggerStatus},
+			</if>
+		</set>
+		WHERE id = #{id}
+	</update>
+
 </mapper>
